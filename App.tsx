@@ -107,8 +107,6 @@ const App = () => {
     );
   };
 
-  console.log(predictions);
-
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
