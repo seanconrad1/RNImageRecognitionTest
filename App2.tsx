@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,6 +13,9 @@ import { fetch } from "@tensorflow/tfjs-react-native";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as jpeg from "jpeg-js";
 import * as ImagePicker from "expo-image-picker";
+// import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+// import { Predictions } from "./types/types";
+import { Buffer } from "buffer";
 
 const App = () => {
   const [isTfReady, setIsTfReady] = useState(false);
@@ -35,6 +38,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    // console.log("Image was updated!");
     if (image) {
       classifyImage();
     }
@@ -43,6 +47,7 @@ const App = () => {
   const imageToTensor = (rawImageData) => {
     const TO_UINT8ARRAY = true;
     const { width, height, data } = jpeg.decode(rawImageData, TO_UINT8ARRAY);
+    // Drop the alpha channel info for mobilenet
     const buffer = new Uint8Array(width * height * 3);
     let offset = 0; // offset into original data
     for (let i = 0; i < buffer.length; i += 3) {
@@ -64,12 +69,10 @@ const App = () => {
       const imageTensor = imageToTensor(rawImageData);
       const predictions = await model.classify(imageTensor);
       setPredictions(predictions);
-      setLoading(false);
+      console.log(predictions);
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
-    setLoading(false);
   };
 
   const selectImage = async () => {
@@ -82,8 +85,6 @@ const App = () => {
 
       if (!response.cancelled) {
         const source = { uri: response.uri };
-        setPredictions(null);
-        setLoading(true);
         setImage(source);
       }
     } catch (error) {
@@ -107,14 +108,12 @@ const App = () => {
     );
   };
 
-  console.log(predictions);
-
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.loadingContainer}>
         <Text style={styles.text}>
-          TFJS ready? {isTfReady ? <Text>✅</Text> : ""}
+          TensorFlow Ready? {isTfReady ? <Text>✅</Text> : ""}
         </Text>
 
         <View style={styles.loadingModelContainer}>
@@ -130,7 +129,7 @@ const App = () => {
         style={styles.imageWrapper}
         onPress={isModelReady ? selectImage : undefined}
       >
-        {image && <Image source={image} style={styles.imageContainer} />}
+        {image && <Image source={image!} style={styles.imageContainer} />}
 
         {isModelReady && !image && (
           <Text style={styles.transparentText}>Tap to choose image</Text>
@@ -142,9 +141,9 @@ const App = () => {
             Predictions: {!loading ? "" : "Predicting..."}
           </Text>
         )}
-        {isModelReady &&
+        {!loading &&
           predictions &&
-          predictions.map((p, idx) => renderPrediction(p, idx))}
+          predictions?.map((p, idx: number) => renderPrediction(p, idx))}
       </View>
     </View>
   );
