@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "passio_classifier",
-    "slug": "passio_classifier",
+    "name": "classifier",
+    "slug": "classifier",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com"
@@ -25,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.seanrad.passio_classifier"
+      "package": "com.seanrad.classifier"
     },
     "web": {
       "favicon": "./assets/favicon.png"
