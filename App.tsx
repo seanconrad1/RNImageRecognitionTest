@@ -119,7 +119,7 @@ const App = () => {
         <View style={styles.loadingModelContainer}>
           <Text style={styles.text}>Model ready? </Text>
           {isModelReady ? (
-            <Text style={styles.text}>✅</Text>
+            <Text style={styles.text}>Ready!</Text>
           ) : (
             <ActivityIndicator size="small" />
           )}
@@ -178,8 +178,6 @@ const styles = StyleSheet.create({
     width: 280,
     height: 280,
     padding: 10,
-    borderColor: "#cf667f",
-    borderWidth: 5,
     marginTop: 40,
     marginBottom: 10,
     position: "relative",
@@ -223,6 +221,8 @@ const styles = StyleSheet.create({
   percentages: {
     color: "white",
     fontSize: 17,
+    width: 60,
+    textAlign: "right",
   },
   percentageAndName: {
     flexDirection: "row",
