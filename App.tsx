@@ -14,6 +14,11 @@ import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as jpeg from "jpeg-js";
 import * as ImagePicker from "expo-image-picker";
 
+interface Prediction {
+  className: string;
+  probability: number;
+}
+
 const App = () => {
   const [isTfReady, setIsTfReady] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
@@ -91,7 +96,7 @@ const App = () => {
     }
   };
 
-  const renderPrediction = (prediction, idx: number) => {
+  const renderPrediction = (prediction: Prediction, idx: number) => {
     return (
       <View key={idx} style={styles.percentageAndName}>
         <Text style={styles.percentages}>
@@ -111,10 +116,6 @@ const App = () => {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.loadingContainer}>
-        <Text style={styles.text}>
-          TFJS ready? {isTfReady ? <Text>✅</Text> : ""}
-        </Text>
-
         <View style={styles.loadingModelContainer}>
           <Text style={styles.text}>Model ready? </Text>
           {isModelReady ? (
@@ -137,12 +138,17 @@ const App = () => {
       <View style={styles.predictionWrapper}>
         {isModelReady && image && (
           <Text style={styles.text}>
-            Predictions: {!loading ? "" : "Predicting..."}
+            Predictions:{" "}
+            {!loading
+              ? ""
+              : "Predicting...(Please be patient, predictions may take a minute)"}
           </Text>
         )}
         {isModelReady &&
           predictions &&
-          predictions.map((p, idx) => renderPrediction(p, idx))}
+          predictions.map((p: Prediction, idx: number) =>
+            renderPrediction(p, idx)
+          )}
       </View>
     </View>
   );

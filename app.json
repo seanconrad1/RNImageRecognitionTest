@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "classifier",
-    "slug": "classifier",
+    "name": "RNRecognitionTest",
+    "slug": "RNRecognitionTest",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,14 +16,15 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com"
+      "bundleIdentifier": "com.RNRecognitionTest",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.seanrad.classifier"
+      "package": "com.RNRecognitionTest"
     },
     "web": {
       "favicon": "./assets/favicon.png"
